@@ -74,27 +74,38 @@ do_start() {
 		insmod /lib/modules/`uname -r`/kernel/drivers/bitmain/bitmain_spi.ko fpga_ret_prnt=0 rx_st_prnt=0
 		#insmod /mnt/mmc1/bitmain_spi.ko fpga_ret_prnt=0 rx_st_prnt=0
 	fi
+	
 	#control console printk level
 	#freq_value="`awk '{if($1 == "option" && $2=="\047freq_value\047") print $3}' $CONFIG_NAME | sed "s/'//g"`"
 	#chip_value=`awk '{if($1 == "option" && $2=="\047chip_freq\047") print $3}' $CONFIG_NAME | sed "s/'//g"`
 	#timeout=`awk '{if($1 == "option" && $2=="\047timeout\047") print $3}' $CONFIG_NAME | sed "s/'//g"`
-	freq_value=0782
-	chip_value=200
-	chip_num=54
-	freq_m=$(($chip_value * 1000))                                                                           
-	timeout=$((2 ** (32 - 8) * (256 / $chip_num) / freq_m / 64))                                             
-	echo $timeout
+	#freq_value=0782
+	#chip_value=200
+	#chip_num=54
+	#freq_m=$(($chip_value * 1000))                                                                           
+	#timeout=$((2 ** (32 - 8) * (256 / $chip_num) / freq_m / 64))                                             
+	#echo $timeout
 
-	queue_value="`awk '{if($1 == "queue") print $2}' $USER_SETTING | sed "s/'//g"`"
-	echo " queue_vale=$queue_value"
-	if [ -z $queue_value ]; then
-		queue_value=8192
+	#queue_value="`awk '{if($1 == "queue") print $2}' $USER_SETTING | sed "s/'//g"`"
+	#echo " queue_vale=$queue_value"
+	#if [ -z $queue_value ]; then
+	#	queue_value=8192
+	#fi
+	if [ -z  "`lsmod | grep bitmain_axi`"  ]; then
+		echo "No bitmain_axi.ko"
+		#insmod /lib/modules/`uname -r`/kernel/drivers/bitmain/bitmain-axi.ko
+        	insmod /lib/modules/bitmain_axi.ko
+	else
+		echo "Have bitmain-axi"
 	fi
-
-	#PARAMS="--bitmain-dev /dev/bitmain-asic --bitmain-options 115200:32:8:$timeout:$chip_value:$real_freq"
-	PARAMS="--bitmain-dev /dev/bitmain-asic --bitmain-options 115200:32:8:$timeout:$chip_value:$freq_value:0725 --bitmain-checkn2diff --bitmain-hwerror --version-file /usr/bin/compile_time --queue $queue_value"
+	PARAMS="--version-file /usr/bin/compile_time"
 	echo PARAMS = $PARAMS
-	start-stop-daemon -b -S -x screen -- -S cgminer -t cgminer -m -d "$DAEMON" $PARAMS --api-listen --default-config /config/cgminer.conf
+	start-stop-daemon -b -S -x screen -- -S cgminer -t cgminer -m -d "$DAEMON" $PARAMS --api-listen --default-config /config/bmminer.conf
+}
+	#PARAMS="--bitmain-dev /dev/bitmain-asic --bitmain-options 115200:32:8:$timeout:$chip_value:$real_freq"
+	#PARAMS="--bitmain-dev /dev/bitmain-asic --bitmain-options 115200:32:8:$timeout:$chip_value:$freq_value:0725 --bitmain-checkn2diff --bitmain-hwerror --version-file /usr/bin/compile_time --queue $queue_value"
+	#echo PARAMS = $PARAMS
+	#start-stop-daemon -b -S -x screen -- -S cgminer -t cgminer -m -d "$DAEMON" $PARAMS --api-listen --default-config /config/cgminer.conf
 	#cgminer $PARAMS -D --api-listen --default-config /config/cgminer.conf 2>&1 | tee log
 }
 
