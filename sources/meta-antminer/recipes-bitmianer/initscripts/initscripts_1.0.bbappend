@@ -87,7 +87,12 @@ do_install_append() {
 	install -d ${D}${bindir}
 	rm -rf ${D}${bindir}/compile_time
 	date > ${D}${bindir}/compile_time
-	echo "Antminer S7" >> ${D}${bindir}/compile_time
+	echo "Antminer S7-moded" >> ${D}${bindir}/compile_time
+	
+	install -d ${D}${base_sbindir}
+	install -m 0755 ${WORKDIR}/check_phy.sh ${D}${base_sbindir}/
+	install -d ${D}${base_sbindir}
+	install -m 0755 ${WORKDIR}/reset.sh ${D}${base_sbindir}/
 }
 
 SRC_URI_append = " file://mountdevtmpfs.sh"
