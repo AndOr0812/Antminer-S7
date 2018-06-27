@@ -8,14 +8,14 @@ DEPENDS = "ncurses curl"
 
 #SRCREV = "v3.8.3-knc"
 #PV = "${SRCREV}+git${SRCPV}"
-SRCREV = "3.8.5"
+SRCREV = "4.10.0"
 #PV = "${SRCREV}+${SRCPV}"
 PR = "r1"
 #SRC_URI = "git://github.com/KnCMiner/cgminer.git;protocol=https;branch=master"
 #SRC_URI	= "file://cgminer-3.8.5.tar.bz2"
 #SRC_URI = "file://cgminer-3.12.0.tar.bz2"
 #SRC_URI = "file://cgminer-4.6.1.tar.bz2"
-SRC_URI = "file://cgminer-4.8.0.tar.bz2"
+#SRC_URI = "file://cgminer-4.8.0.tar.bz2"
 #SRC_URI = "file://cgminer-3.4.3.tar.bz2"
 #S = "${WORKDIR}/git"
 #S = "${WORKDIR}/cgminer-3.8.5"
@@ -25,17 +25,18 @@ S = "${WORKDIR}/cgminer-4.8.0"
 #S = "${WORKDIR}/cgminer-3.4.3"
 
 #CFLAGS_prepend = "-I ${S}/compat/jansson-2.5/src -I ${S}/compat/libusb-1.0/libusb"
-CFLAGS_prepend = "-I ${S}/compat/jansson-2.6/src -I ${S}/compat/libusb-1.0/libusb"
+CFLAGS_prepend = "-I ${S}/compat/jansson-2.9/src"
 #CFLAGS_prepend = "-I ${S}/compat/jansson -I ${S}/compat/libusb-1.0/libusb"
 #TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 #--with-sysroot=${prefix}/${TARGET_SYS}
 #--with-system-libusb
 
 EXTRA_OECONF = " \
-		 --enable-bitmain \
+		--enable-bitmain_soc \
 	     --disable-adl \
 	     --disable-opencl \
-	     "
+	     --disable-libcurl \
+	    --enable-bitmain_${MINER_TYPE}"
 		 
 do_configure_prepend() {
 	autoreconf -fiv
