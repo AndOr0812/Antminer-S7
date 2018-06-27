@@ -1,28 +1,28 @@
 #!/bin/sh
 #####################debug###
-echo "check mouted config"
+#echo "check mouted config"
 
-check0p3=`cat /etc/mtab | grep "mmcblk0p3"`
+#check0p3=`cat /etc/mtab | grep "mmcblk0p3"`
 #if [ $? -eq 0 ]; then
-	echo $check0p3
-
-	if [ ""x = "$check0p3"x ] ; then
-		echo "mounting config"
-		mount /dev/mmcblk0p3 /config
-	fi
+#	echo $check0p3
+##
+#	if [ ""x = "$check0p3"x ] ; then
+#		echo "mounting config"
+#		mount /dev/mmcblk0p3 /config
+#	fi
 #fi
-check0p3=`cat /etc/mtab | grep "mmcblk0p3"`
-if [ ""x = "$check0p3"x ] ; then
-    checkmtd9=`cat /proc/mtd | grep "mtd9"`
-    if [ ""x != "$checkmtd9"x ] ; then
-        echo "mount mtd9 to config"
-        mount -t jffs2 /dev/mtdblock9 /config
-    fi
-else
-    echo "mounting mmcblk0p1"
-    mkdir /mnt/mmc1
-    mount /dev/mmcblk0p1 /mnt/mmc1
-fi
+#check0p3=`cat /etc/mtab | grep "mmcblk0p3"`
+#if [ ""x = "$check0p3"x ] ; then
+#    checkmtd9=`cat /proc/mtd | grep "mtd9"`
+#    if [ ""x != "$checkmtd9"x ] ; then
+#        echo "mount mtd9 to config"
+#        mount -t jffs2 /dev/mtdblock9 /config
+#    fi
+#else
+#    echo "mounting mmcblk0p1"
+#    mkdir /mnt/mmc1
+#    mount /dev/mmcblk0p1 /mnt/mmc1
+#fi
 
 
 ###########################
@@ -89,3 +89,5 @@ if [ ! -d /config/dataformatconfig ]; then
    cp -rf /etc/dataformatconfig /config/
 fi
 #####################################################
+
+sync
