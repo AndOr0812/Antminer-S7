@@ -1,25 +1,27 @@
 {
 "pools" : [
 {
-"url" : "solo.antpool.com:25",
-"user" : "antminer",
+"url" : "solo.antpool.com:3333",
+"user" : "antminer_1",
 "pass" : "123"
 },
 {
-"url" : "p2p.antpool.com:3333",
-"user" : "antminer",
+"url" : "stratum.antpool.com:3333",
+"user" : "antminer_1",
 "pass" : "123"
 },
 {
-"url" : "stratum+tcp://stratum.f2pool.com:3333",
-"user" : "ant.1",
+"url" : "stratum.f2pool.com:3333",
+"user" : "antminer.1",
 "pass" : "123"
 }
 ]
 ,
 "api-listen" : true,
 "api-network" : true,
-"api-allow" : "W:0/0",
-"bitmain-freq" : "7:200:0782",
-"bitmain-voltage" : "0725"
+"api-groups" : "A:stats:pools:devs:summary:version",
+"api-allow" : "A:0/0,W:*",
+"bitmain-use-vil" : true,
+"bitmain-freq" : "650",
+"multi-version" : "1"
 }
