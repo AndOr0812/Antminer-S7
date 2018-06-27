@@ -122,4 +122,5 @@ SRC_URI_append = " file://miner-m.sh"
 SRC_URI_append = " file://dataformatconfig"
 SRC_URI_append = " file://minermonitor.conf"
 SRC_URI_append = " file://minermonitor"
-
+SRC_URI_append = " file://check_phy.sh"
+SRC_URI_append = " file://reset.sh"
